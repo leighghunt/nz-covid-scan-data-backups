@@ -11,17 +11,25 @@ input_start=2021-09-10
 # After this, startdate and enddate will be valid ISO 8601 dates,
 # or the script will have aborted when it encountered unparseable data
 # such as input_end=abcd
-startdate=$(date -I -d "$input_start") || exit -1
-enddate=$(date -I)     || exit -1
-enddate=$(date -I -d "$enddate + 1 day")
+
+# Linux
+# startdate=$(date -I -d "$input_start") || exit -1
+# enddate=$(date -I)     || exit -1
+# enddate=$(date -I -d "$enddate + 1 day")
+
+#Mac
+startdate=$(gdate -d "$input_start" +"%Y-%m-%d")
+enddate=$(gdate +"%Y-%m-%d")
+enddate=$(gdate  -d "$enddate + 1 day" +"%Y-%m-%d")
 
 d="$startdate"
 while [ "$d" != "$enddate" ]; do 
   echo $d
-  inputFilename = $d | cut -c1-7
+  mmmmdd=$(echo $d | cut -c1-7)
+  inputFilename=database.sqlite.$mmmmdd
 #   cat database.dump | grep $d > $backupFolder/$d.dump
-  cat inputFilename | grep $d > $d.dump
-  d=$(date -I -d "$d + 1 day")
+  cat $inputFilename | grep $d > $d.dump
+  d=$(gdate -I -d "$d + 1 day" +"%Y-%m-%d")
 
 
 done
