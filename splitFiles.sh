@@ -27,9 +27,14 @@ while [ "$d" != "$enddate" ]; do
   echo $d
   mmmmdd=$(echo $d | cut -c1-7)
   inputFilename=database.sqlite.$mmmmdd
-#   cat database.dump | grep $d > $backupFolder/$d.dump
-  cat $inputFilename | grep $d > $d.dump
-  d=$(gdate -I -d "$d + 1 day" +"%Y-%m-%d")
+  outputFilename=backup/$d.dump
+  echo $inputFilename
+  cat $inputFilename | grep $d > $outputFilename
+
+  #Linux
+  #d=$(gdate -I -d "$d + 1 day" +"%Y-%m-%d")
+  #Mac
+  d=$(gdate -d "$d + 1 day" +"%Y-%m-%d")
 
 
 done
