@@ -3,7 +3,7 @@
 # backupFolder="backup"
 # mkdir -p $backupFolder
 
-input_start=2021-09-10
+input_start=2022-07-01
 # input_start=2021-11-29
 
 # input_end=
